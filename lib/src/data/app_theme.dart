@@ -77,12 +77,9 @@ class AppTheme {
     String description,
     this.options,
   })  : this.data = data,
-        this.description = description ??
-            (data.brightness == Brightness.light
-                ? "Light Theme"
-                : "Dark Theme") {
-    assert(description != null, "Theme $id does not have a description");
-    assert(description.length < 30, "Theme description too long ($id)");
+        this.description = description {
+    assert(description != null ? description.length < 30 : true,
+        "Theme description too long ($id)");
     assert(id.isNotEmpty, "Id cannot be empty");
     assert(id.toLowerCase() == id, "Id has to be a lowercase string");
     assert(!id.contains(" "), "Id cannot contain spaces. (Use _ for spaces)");
@@ -93,7 +90,7 @@ class AppTheme {
     return AppTheme(
       data: ThemeData.light(),
       id: id ?? "default_light_theme",
-      description: "Android Default Light Theme",
+      description: "Default Light Theme",
     );
   }
 
@@ -102,18 +99,8 @@ class AppTheme {
     return AppTheme(
       data: ThemeData.dark(),
       id: id ?? "default_dark_theme",
-      description: "Android Default Dark Theme",
+      description: "Default Dark Theme",
     );
-  }
-
-  /// Additional purple theme constructor
-  factory AppTheme.purple({String id}) {
-    return AppTheme(
-        data: ThemeData.light().copyWith(
-          primaryColor: Colors.purple,
-          accentColor: Colors.pink,
-        ),
-        id: id);
   }
 
   /// Creates a copy of this [AppTheme] but with the given fields replaced with the new values.
